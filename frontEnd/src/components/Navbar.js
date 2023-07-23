@@ -32,6 +32,8 @@ export default function Navbar({setSearchResult})
                 <li className='nav-li-items'><Link to="/"> Home </Link></li>
                 <li className='nav-li-items'><Link to="/products"> Products </Link></li>
                 <li className='nav-li-items'><Link to="/addProduct"> Add product </Link></li>
+                <li className='nav-li-items'><Link to="/inscription"> Sin Up </Link></li>
+                <li className='nav-li-items'><Link to="/connection"> Login </Link></li>
             </ul>
             <form className='search' onSubmit={onClickHandler}>
                 <label>
