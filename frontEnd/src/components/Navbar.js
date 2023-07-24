@@ -16,11 +16,11 @@ export default function Navbar({setSearchResult})
         }
         try {
           const response = await axios.get(`http://localhost:3003/products/search/${search}`);
-          console.log(response.data);
+          //console.log(response.data);
           setSearchResult(response.data);
           
         } catch (err) {
-          console.log(err.message);
+          //console.log(err.message);
         } finally {
           setSearch('');
           navigate("/products/search")
@@ -32,8 +32,8 @@ export default function Navbar({setSearchResult})
                 <li className='nav-li-items'><Link to="/"> Home </Link></li>
                 <li className='nav-li-items'><Link to="/products"> Products </Link></li>
                 <li className='nav-li-items'><Link to="/addProduct"> Add product </Link></li>
-                <li className='nav-li-items'><Link to="/inscription"> Sin Up </Link></li>
-                <li className='nav-li-items'><Link to="/connection"> Login </Link></li>
+                <li className='nav-li-items'><Link to="/sinUp"> Sin Up </Link></li>
+                <li className='nav-li-items'><Link to="/login"> Login </Link></li>
             </ul>
             <form className='search' onSubmit={onClickHandler}>
                 <label>

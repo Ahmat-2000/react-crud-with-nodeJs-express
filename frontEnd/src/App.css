@@ -22,8 +22,13 @@ body{
   min-height: 100%;
   font-size: 1.4rem;
 }
-#nameInput, #quantityInput,#priceInput{
+#nameInput, #quantityInput,#priceInput, #confirmPasswordIput, #passwordInput,#usernameInput
+{
   width: 100%;
+}
+.start{
+  color: red;
+  vertical-align:sub;
 }
 /* 
 .nameSpan{

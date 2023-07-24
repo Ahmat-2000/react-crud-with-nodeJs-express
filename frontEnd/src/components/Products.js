@@ -8,7 +8,7 @@ export default function Products({searchResult}) {
     const productsList = contextValues.productList || [];
     const location = useLocation();
     const currentPath = location.pathname;
-    console.log(currentPath);
+   // console.log(currentPath);
     return (
         <table className="container content">
             <thead className="container">

@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Products from './components/Products';
 import AddProduct from './components/AddProduct';
+import Sinup from './components/Sinup';
+import Login from './components/Login';
 import { useState, createContext, useEffect } from 'react';
 
 
@@ -30,6 +32,8 @@ function App() {
             <Route path='/products' element={<Products searchResult={searchResult}/>}></Route>
             <Route path='/addProduct' element={<AddProduct />}></Route>          
             <Route path='/updateProduct' element={<AddProduct />}></Route>          
+            <Route path='/sinUp' element={<Sinup />}></Route>          
+            <Route path='/login' element={<Login />}></Route>          
         </Routes>
       </productContext.Provider>
       </main>
