@@ -31,7 +31,6 @@ function App() {
             <Route path='/products/search' element={<Products searchResult={searchResult}/>}></Route>
             <Route path='/products' element={<Products searchResult={searchResult}/>}></Route>
             <Route path='/addProduct' element={<AddProduct />}></Route>          
-            <Route path='/updateProduct' element={<AddProduct />}></Route>          
             <Route path='/sinUp' element={<Sinup />}></Route>          
             <Route path='/login' element={<Login />}></Route>          
         </Routes>

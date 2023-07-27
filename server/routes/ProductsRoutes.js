@@ -31,6 +31,8 @@ router.get("/:id", async (req,res) => {
 router.post("/", async (req, res) =>{
     try {
         const product = req.body;
+        // to modify later with the real userId when the user login
+        if(!product.UserId) product.UserId = 1;
         await Products.create(product);
         res.status(201).json(product);
     } catch (error) {

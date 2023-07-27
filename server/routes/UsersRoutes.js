@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const {sign} = require('jsonwebtoken')
 const {Op} = require('sequelize');
 const {Users} = require('../models');

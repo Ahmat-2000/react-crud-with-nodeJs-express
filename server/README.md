@@ -7,7 +7,7 @@ Dependances à installer pour utiliser node avec express et mysql:
 1- installer express avec la commande : npm install express
 2- installer mysql avec la commande : npm install mysql2
 3- installer cors avec la commande : npm install cors
-3- installer bcrypt avec la commande :npm install bcrypt
+3- installer bcrypt avec la commande :npm install bcryptjs
 4- installer jsonwebtoken avec la commande : npm install jsonwebtoken
 
 #-------------------------------------------------------------
@@ -15,7 +15,7 @@ Cors c'est un middleware pour se protèger contre la vulnerabilité cross-site r
 
 #-------------------------------------------------------------
 
-bcrypt c'est un module pour hasher les mots de passe de nos utilisateur.
+bcryptjs c'est un module pour hasher les mots de passe de nos utilisateur.
 
 on peut installer les trois avec la commande : npm install express cors mysql2 bcrypt
 #------------------------------------------------------------

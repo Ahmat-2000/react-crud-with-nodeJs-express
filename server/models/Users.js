@@ -1,9 +1,7 @@
-const Products = require("./Products");
-
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define('Users',
     {
-        userId: {
+        id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -31,10 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     /* Association one to many , one user has many products and one product belong to one user*/
-   /*  Users.association = (models) => {
+    Users.associate = (models) => {
         Users.hasMany(models.Products,{
             onDelete: "cascade",
         });
-    }; */
+    };
     return Users;
 }

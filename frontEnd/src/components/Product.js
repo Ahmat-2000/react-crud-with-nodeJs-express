@@ -13,7 +13,7 @@ export default function Product({product}) {
       };
     const modifyProduct = (event) =>{
         event.stopPropagation();
-        navigate("/updateProduct",{state : {initialValues}});
+        navigate("/addProduct",{state : {initialValues}});
     }
     const deleteProduct = (event,id) =>{
         event.stopPropagation();

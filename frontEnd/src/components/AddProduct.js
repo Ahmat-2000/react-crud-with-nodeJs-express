@@ -11,7 +11,7 @@ export default function AddProduct({update}) {
     const setProductList = contextValues.setProductList;
     const productList = contextValues.productList;
     const intialFieldValue = location?.state?.initialValues || {name :"", unite_price:"", quantity: ""};
-    let isUpdate = true && intialFieldValue.id;
+    let isUpdate = intialFieldValue.id ? true : false;
     
     const handleSubmit = (data) => {
         if(isUpdate){
@@ -26,7 +26,6 @@ export default function AddProduct({update}) {
                         return value;
                       });
                     setProductList(updatedProductList);
-                    isUpdate =false;
                 })
             .catch((err) => { console.log(err.message)})
             .finally(navigate("/products"));
@@ -46,7 +45,7 @@ export default function AddProduct({update}) {
         quantity: Yup.number().positive().min(1).required().integer()
     })
     return (
-        <Formik initialValues={intialFieldValue} onSubmit={handleSubmit} validationSchema={validationSchema}>
+        <Formik initialValues={intialFieldValue} enableReinitialize onSubmit={handleSubmit} validationSchema={validationSchema}>
             <Form className="container content form">
                 <label htmlFor="nameInput">Name</label>
                 <Field name="name" id='nameInput' placeholder="Enter a product name"/>
