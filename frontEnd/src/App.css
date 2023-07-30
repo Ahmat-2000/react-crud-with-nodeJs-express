@@ -19,7 +19,7 @@
 }
 body{
   background-color: var(--white-color);
-  min-height: 100%;
+  min-height: 80vh;
   font-size: 1.4rem;
 }
 #nameInput, #quantityInput,#priceInput, #confirmPasswordIput, #passwordInput,#usernameInput
@@ -30,13 +30,6 @@ body{
   color: red;
   vertical-align:sub;
 }
-/* 
-.nameSpan{
-  margin-left: 38px;
-}
-.quantitySpan{
-  margin-left: 18px;
-} */
 .form label{
   text-align: center;
   margin: 2px;
@@ -58,7 +51,22 @@ body{
   margin: 10px ;
 }
 th,td{
-  padding: 4px;
+  padding: 15px;
+}
+thead, tbody{
+  display: block;
+}
+thead *,tbody *  {
+  display: inline-block;
+}
+thead tr, tbody tr{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 0px 5px;
+}
+.home{
+  display: grid;
+  align-content: center;
 }
 /* Un contenaire, ça peut être un div, body ou un block */
 .container{
@@ -72,9 +80,11 @@ th,td{
 .content{
   margin: 12rem auto;
   text-align: justify;
-  padding: 1.8rem;
+  padding: 1.8rem 0.8rem;
   width: 90%;
   max-width: 800px;
+  min-height: 500px;
+  min-height: 68vh;
 }
 .form{
   width: 70%;
@@ -126,4 +136,21 @@ input, button{
 .nav-li-items a:hover{
   background-color: var(--white-color);
   box-shadow: -0.5px 0px 0.5px 1px rgb(0, 0, 0);
+}
+@media screen and (max-width:500px) {
+  .table{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+  thead *,tbody *  {
+    display: inline-block;
+  }
+  tbody,thead{
+    display: flex;
+  }
+  thead tr, tbody tr{
+    display: grid;
+    grid-template-rows: repeat(5,1fr);
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,42 +1,43 @@
-import {useNavigate,useLocation} from 'react-router-dom';
-import {useContext} from 'react';
-import {productContext} from '../App'
+import {useLocation , useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-export default function AddProduct({update}) {
-    const navigate = useNavigate();
+import { useContext } from 'react';
+import { authContext } from '../App';
+
+export default function AddProduct() {
     const location = useLocation();
-    const contextValues = useContext(productContext);
-    const setProductList = contextValues.setProductList;
-    const productList = contextValues.productList;
+    const navigate = useNavigate();
+    const {setAuthentication} = useContext(authContext);
     const intialFieldValue = location?.state?.initialValues || {name :"", unite_price:"", quantity: ""};
     let isUpdate = intialFieldValue.id ? true : false;
-    
-    const handleSubmit = (data) => {
-        if(isUpdate){
-            axios.put(`http://localhost:3003/products/${data.id}`,data)
+    const handleSubmit = (data,{resetForm}) => {
+        const accessToken = localStorage.getItem('accessToken');
+        if(accessToken){
+            if(isUpdate){
+            axios
+            .put(`http://localhost:3003/products/${data.id}`,data,{headers : {token : localStorage.getItem('accessToken')}})
             .then((response) => 
                 {
-                   
-                    const updatedProductList = productList.map((value) => {
-                        if (value.id === data.id) {
-                          return { ...data };
-                        }
-                        return value;
-                      });
-                    setProductList(updatedProductList);
+                    console.log(response.data);
+                    alert(response.data.message);
+                    navigate("/products");
                 })
-            .catch((err) => { console.log(err.message)})
-            .finally(navigate("/products"));
+            .catch((err) => { console.log(err.message)});
+            }
+            else{
+                axios.post("http://localhost:3003/products",data,{headers : {token : localStorage.getItem('accessToken')}})
+                .then((response) => {
+                    alert(response.data.message);
+                    resetForm({values: {name :"", unite_price:"", quantity: ""}});
+                    console.log(response.data);
+                })
+                .catch((err) => { console.log(err.message)});
+            }
         }
         else{
-            axios.post("http://localhost:3003/products",data)
-            .then((response) => {
-                setProductList(prevProductList => [...prevProductList,data ]);
-            })
-            .catch((err) => { console.log(err.message)})
-            .finally(navigate("/products"));
+            alert("YOU ARE NOT CONNECTED");
+            setAuthentication({username : "", userId : 0, connected : false});
         }
     }
     const validationSchema = Yup.object().shape({
@@ -45,7 +46,7 @@ export default function AddProduct({update}) {
         quantity: Yup.number().positive().min(1).required().integer()
     })
     return (
-        <Formik initialValues={intialFieldValue} enableReinitialize onSubmit={handleSubmit} validationSchema={validationSchema}>
+        <Formik initialValues={intialFieldValue} enableReinitialize={true} onSubmit={handleSubmit} validationSchema={validationSchema}>
             <Form className="container content form">
                 <label htmlFor="nameInput">Name</label>
                 <Field name="name" id='nameInput' placeholder="Enter a product name"/>

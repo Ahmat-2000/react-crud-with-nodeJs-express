@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 export default function Product({product}) {
     const navigate = useNavigate();
-    const contextValues = useContext(productContext);
+    const {setProductList} = useContext(productContext);
     const initialValues = {
         id: product.id,
         name: product.name,
@@ -13,16 +13,27 @@ export default function Product({product}) {
       };
     const modifyProduct = (event) =>{
         event.stopPropagation();
-        navigate("/addProduct",{state : {initialValues}});
+        const accessToken = localStorage.getItem("accessToken");
+        if(accessToken) navigate("/addProduct",{state : {initialValues}});
+        else window.alert("YOU ARE NOT CONNECTED");
     }
     const deleteProduct = (event,id) =>{
         event.stopPropagation();
-        axios.delete(`http://localhost:3003/products/${id}`)
-        .then((response) => {
-           
-            contextValues.setProductList((prevProductList) => prevProductList.filter((value) => value.id !== id));
-        })
-        .catch((err) => { console.log(err.message)})
+        const accessToken = localStorage.getItem("accessToken");
+        if(accessToken){
+            let confirmation = window.confirm("DO YOU WANT TO DELETE THIS PRODUCT ?")
+            if(confirmation){
+                axios.delete(`http://localhost:3003/products/${id}`,{headers :{token : accessToken}})
+                .then((response) => {
+                    if(!response.data.error)
+                        setProductList((prevProductList) => prevProductList.filter((value) => value.id !== id));
+                })
+                .catch((err) => { console.log(err.message)});
+            }
+        }
+        else{
+            window.alert("YOU ARE NOT CONNECTED");
+        }
     }
     return (
         <tr className="container">

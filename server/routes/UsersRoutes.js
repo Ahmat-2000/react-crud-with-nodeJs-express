@@ -4,7 +4,11 @@ const bcrypt = require('bcryptjs');
 const {sign} = require('jsonwebtoken')
 const {Op} = require('sequelize');
 const {Users} = require('../models');
-
+const {validateToken} = require("../middlewares/AuthMiddleware");
+// validate a token for authentification purpose
+router.get("/token",validateToken,(req,res) => {
+    res.json(req.user);
+})
 //fetch all data
 router.get("/", async (req,res) => {
     const listOfUsers = await Users.findAll();
@@ -23,15 +27,18 @@ router.post("/sinUp", async (req, res) =>{
     try {
         const user = await Users.findOne({where: {username : username}});
         if(user) return res.json({status: "failed", error : "User already Exist"});
-        bcrypt.hash(password,10).then((hash) => {
-            Users.create({
-                username : username,
-                password : hash
-            })
-            res.status(201).json({status: "success", message: `user ${username} was add successfuly`});
-        })
+        const hash = await bcrypt.hash(password,10);
+        const newUser = await Users.create({
+            username : username,
+            password : hash
+        });
+        const accessToken = sign({
+            userId : newUser.id,
+            username : newUser.username
+        },"CrudSecretKeyForJsonWebToken"); // later i'll choose another secret word
+        res.json({username : newUser.username, userId : newUser.id, token : accessToken});
     } catch (error) {
-        res.status(404).json({status: "failed", message : error.message });
+        res.json({status: "failed", message : error.message });
     }
 });
 
@@ -44,14 +51,15 @@ router.post("/login",async (req,res) => {
         bcrypt.compare(password, user.password).then((match) =>{
             if(!match) return res.json({status: "Failed", error : "Wrong Username and Password combination"});
             const accessToken = sign({
-                id : user.userId,
+                userId : user.id,
                 username : user.username
-            },"secret word"); // later i'll choose another secret word
-            res.json(accessToken);
+            },"CrudSecretKeyForJsonWebToken"); // later i'll choose another secret word
+            res.json({username : user.username, userId : user.id,token : accessToken});
         })
     }catch(error){
-        res.status(404).json({status: "failed", message : error.message });
-    }
-   
+        res.json({status: "failed", message : error.message });
+    }  
 })
+
+
 module.exports= router;

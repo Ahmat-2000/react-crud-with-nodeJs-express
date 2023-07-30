@@ -1,19 +1,39 @@
-/* import {useNavigate,useLocation} from 'react-router-dom';
-import {useContext} from 'react';
-import {productContext} from '../App'; */
 import {Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useContext, useEffect } from 'react';
+import { authContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 export default function Sinup() {
+    const {authentication,setAuthentication} = useContext(authContext);
+    const navigate = useNavigate();
     const intialFieldValue = {
         username : "",
         password : "",
         confirmPassword : ""
     };
+    useEffect(()=>{
+        if(authentication.connected) navigate("/");
+        console.log("sinUp")
+    })
     const handleSubmit = (data) => {
-       axios.post("http://localhost:3003/users/sinUp",data).then((response) => {
+      /*  axios.post("http://localhost:3003/users/sinUp",data).then((response) => {
             console.log(response.data);
-       }).catch((error) => console.log(error))
+       }).catch((error) => console.log(error)) */
+       axios.post("http://localhost:3003/users/sinUp",data).then((response) => {
+            //console.log(response.data);
+            if(response.data.error) 
+                alert(response.data.error);
+            else {
+                localStorage.setItem("accessToken",response.data.token);
+                setAuthentication({
+                    username : response.data.username, 
+                    userId : response.data.userId, 
+                    connected : true
+                });
+                navigate('/');
+            }
+        }).catch((error) => console.log(error))
     };
     const validationSchema = Yup.object().shape({
         username: Yup.string().min(3).max(25).required().matches(/^[a-zA-Z0-9]+$/,'Username must contain only letters and numbers'),
