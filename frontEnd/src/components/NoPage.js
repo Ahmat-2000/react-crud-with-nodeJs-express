@@ -1,3 +1,4 @@
+import React from "react";
 export default function NoPage(params) {
     return(
         <div className="container content home">

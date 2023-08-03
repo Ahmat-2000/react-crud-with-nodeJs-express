@@ -8,7 +8,7 @@ import AddProduct from './components/AddProduct';
 import Sinup from './components/Sinup';
 import Login from './components/Login';
 import NoPage from './components/NoPage';
-import { useState, createContext, useEffect } from 'react';
+import { React, useState, createContext, useEffect } from 'react';
 
 export const productContext = createContext();
 export const authContext = createContext();

@@ -1,8 +1,9 @@
+import React from "react";
 import {Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { authContext } from '../App';
-export default function Navbar({})
+export default function Navbar()
 {
     const authContextConsumer = useContext(authContext);
     const setSearchResult = authContextConsumer.setSearchResult;

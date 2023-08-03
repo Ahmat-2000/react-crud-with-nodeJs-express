@@ -1,3 +1,4 @@
+import React from "react";
 import {Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -33,7 +34,7 @@ export default function Sinup() {
                 });
                 navigate('/');
             }
-        }).catch((error) => console.log(error))
+        }).catch((error) => window.alert('Sever is not working, sorry come later'));
     };
     const validationSchema = Yup.object().shape({
         username: Yup.string().min(3).max(25).required().matches(/^[a-zA-Z0-9]+$/,'Username must contain only letters and numbers'),

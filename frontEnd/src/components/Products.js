@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext , useEffect, useState} from "react";
 import Product from "./Product";
 import {useLocation} from 'react-router-dom';
@@ -34,6 +35,7 @@ export default function Products({searchResult}) {
       setIsLoading(false);
       setAuthentication({username : "", userId : 0, connected : false});
     }
+    // eslint-disable-next-line
   },[])
   if(isLoading) return;
   return (
